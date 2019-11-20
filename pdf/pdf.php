@@ -47,11 +47,19 @@ $pdf->AddPage();
 $pdf->SetFont('Times','',12);
 $En_cours = 200;
 $En_previous = 300;
+$En_moyenne = 250;
+//for($i=40;$i<=280;$i = $i+10)
+//    $pdf->Cell(0,10,' '.$i,0,1);
 $pdf->Cell(0,10,'Consommation du mois en cours : '.$En_cours,0,1);
 $pdf->Cell(0,10,'Consommation du dernier mois : '.$En_previous,0,1);
 $pdf->Cell(0,10,'facture du dernier mois : '.$En_previous*0.135,0,1);
 $pdf->Ln(20);
-$pdf->Image('romain.jpg',10,80,200);
+$pdf->Image('romain.jpg',8,100,95);
+$pdf->Image('romain.jpg',107,100,95);
+$pdf->Ln(80);
+$pdf->Cell(0,10,'Consommation moyenne des 12 derniers mois : '.$En_moyenne ,0,1);
+$pdf->Cell(0,10,'prix paye sur les 12 derniers mois : '.$En_moyenne*0.135 ,0,1);
+
 
 
 $pdf->Output();

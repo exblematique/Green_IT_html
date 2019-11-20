@@ -131,7 +131,7 @@ barSeries.setData([
   ]);
 </script>
 
- <?php
+<?php
 $servername = "localhost:3306";
 $username = "GHT";
 $password = "azerty1234";
