@@ -1,22 +1,23 @@
 <?php
 require('fpdf.php');
-$db = new mysqli('localhost:3306','GHT','azerty1234','GHT');
-$result = $db->query('SELECT AVG(Value) FROM Data WHERE Foyer="A"');
-while($row = $result->fetch_array())
-{
-	$moyenne = $row['AVG(Value)'];
-	
-}
-$db->close();
+
 class PDF_MySQL_Table extends FPDF
 {
-
 protected $ProcessingTable=false;
 protected $aCols=array();
 protected $TableX;
 protected $HeaderColor;
 protected $RowColors;
 protected $ColorIndex;
+
+$db = new mysqli('localhost:3306','GHT','azerty1234','GHT');
+$result = $db->query('SELECT AVG(Value) FROM Data WHERE Foyer="A"');
+while($row = $result->fetch_array())
+{
+	$moyenne = $row['AVG(Value)'];
+}
+$resource->free();
+$db->close();
 
 function Header()
 {
@@ -36,17 +37,12 @@ function TableHeader()
         $this->Cell($col['w'],6,$col['c'],1,0,'C',$fill);
     $this->Ln();
 }
-function Moyenne()
-{
-	global $moyenne;
-	return $moyenne;
-}
+
 function Row($data)
 {
-	global $moyenne;
     $this->SetX($this->TableX);
-    $ci=$this->ColorIndex;
-    $fill=!empty($this->RowColors[$ci]);
+    //$ci=$this->ColorIndex;
+    //$fill=!empty($this->RowColors[$ci]);
 	foreach($this->aCols as $col)
         $value = $data[$col['f']];
 	If($value <= $moyenne)
@@ -98,7 +94,7 @@ function AddCol($field=-1, $width=-1, $caption='', $align='L')
     $this->aCols[]=array('f'=>$field,'c'=>$caption,'w'=>$width,'a'=>$align);
 }
 
-function Table($link, $query, $prop=array())
+function Table($link, $query, $prop=array(),$Moyenne)
 {
     // Execute query
     $res=mysqli_query($link,$query) or die('Error: '.mysqli_error($link)."<br>Query: $query");

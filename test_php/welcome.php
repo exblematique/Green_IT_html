@@ -22,23 +22,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <body>
     <!-- NavBar -->
     <div class="topnav">
-        <a href="welcome.php"           class="accueil">Accueil</a>
-        <a href="reset-password.php"    class="reset">Reset Your Password</a>
-        <a href="logout.php"            class="logout">Sign Out of Your Account</a>
+        <a class="accueil" href="welcome.php">Accueil</a>
+        <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
+        <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
     </div>
     <!-- Body -->
-    <div class="content">
-        <div class="page-header">
-            <h1>Bienvenue, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b> sur votre interface de gestion.</h1>
-        </div>
+    <div class="page-header">
+        <h1>Bienvenue, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b> sur votre interface de gestion.</h1>
+    </div>
+    <div class="charts">
         <script>
-            const chart = LightweightCharts.createChart(document.body, { 
-                width: 500, 
-                height: 300, 
-                localization: {
-                    locale: 'fr-FR',
-                    dateFormat: 'dd/MM/yyyy',
-                },});
+            const chart = LightweightCharts.createChart(document.body, { width: 500, height: 300 });
             const histogramSeries = chart.addHistogramSeries({
                 base: 0,
             });
@@ -59,14 +53,8 @@ histogramSeries.setData([
     { time: "2018-12-31", value: 54.85 }
     ]);
 
-const chart2 = LightweightCharts.createChart(document.body, { 
-    width: 500, 
-    height: 300, 
-    localization: {
-        locale: 'fr-FR',
-        dateFormat: 'dd/MM/yyyy',
-    },});
-const areaSeries = chart2.addAreaSeries();
+        const chart2 = LightweightCharts.createChart(document.body, { width: 500, height: 300 });
+        const areaSeries = chart2.addAreaSeries();
 
 // set the data
 areaSeries.setData([

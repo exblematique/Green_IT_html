@@ -1,7 +1,7 @@
 <?php
 include("META-INF/config.php");
 $foyer = $_POST['clients']['0'];
-$result = $link->query('SELECT Value, Date FROM Data WHERE Foyer="'.$foyer['name'].'"');
+$result = $link->query('SELECT Value, DATE_FORMAT(Date, "%Y-%m-%d") as Date FROM Data WHERE Foyer="'.$foyer['name'].'"');
 //SELECT now();
 ?>
 {
