@@ -2,7 +2,7 @@
 <html lang="fr-FR">
 <head>
   <title>Team 39 - Admin view</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="admin_view.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="lightweight-charts.standalone.production.js"></script>
 </head>

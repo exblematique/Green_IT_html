@@ -66,12 +66,3 @@ a#inscription {
 .topnav .login-container button:hover {
   background-color: green;
 }
-
-.hidden{
-	display: none;
-    visibility: hidden;
-}
-
-#listClient div{
-    display: inline;
-}
