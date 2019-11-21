@@ -1,13 +1,16 @@
+header{
+    display: block;
+    background-color: #DDDDDD;
+}
+
 *{
     margin: 0px;
-    padding: 0px;
     font-family: Avenir, sans-serif;
 }
 
 header div{
-    width: 100%;
+    width: 40%;
     margin: 0 auto;
-    background-color: white;
     position: sticky;
     top: 0px;
 }
@@ -76,11 +79,50 @@ header div > ul li:hover .sous{
   height: 1500px;
 }
 
-.hidden{
-	display: none;
-    
+#listClient *{
+    background-color: #DDDDDD;
+    display: inline-block;
+}
+
+#listClient{
+    max-width: 40%;
+    border: none;
+    display: inline-block;
 }
 
 #listClient div{
-    display: inline;
+    width: 20%;
+    border: none;
+}
+
+#listClient div:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+#settings{
+    height: auto;
+    width: 60%;
+    position: absolute;
+    display: inline-flex;
+    border: none;
+}
+
+#clients{
+    margin:auto;
+    text-align:center;
+    height: auto;
+    width: auto;
+    border: none;
+    display: block;
+}
+
+#clients div{
+    height: auto;
+    width: auto;
+    border: none;
+    display: inline-block;
+}
+
+.hidden{
+	display: none;
 }

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
   <title>Login/Registration Form Transition</title>
-  <link rel="stylesheet" href="./style_accueil.css">
+  <link rel="stylesheet" href="./style_accueil-minimized.css">
 
 </head>
 <body>

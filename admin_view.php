@@ -1,3 +1,14 @@
+<?php
+// Initialize the session
+session_start();
+
+// Check if the user is already logged in, if yes then redirect him to welcome page
+if($_SESSION["Username"] != "D4G2019"){
+    header("location: accueil.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr-FR">
 <head>
@@ -23,7 +34,8 @@
             $result->free();
             $link->close();
         ?></div>
-        <div id="Settings">
+        <div id="settings">
+            <div>
             <ul><li class="deroulant"><a id="selFoyer">Select Foyer</a>
                 <ul class="sous">
                     <?php foreach ($foyer as $key){
@@ -31,13 +43,16 @@
                     }?>
                 </ul>
             </ul>
-            <div>Data from <input type="date" id="start" value="2019-01-01" onChange="updateInput('start')" /></div>
-            <div> to<input type="date" id="end" value="<?php echo $curDate;?>" onChange="updateInput('end')"/></div>
+            </div>
+            <div>
+                <div>Data from <input type="date" id="start" value="2019-01-01" onChange="updateInput('start')" /></div>
+                <div> to<input type="date" id="end" value="<?php echo $curDate;?>" onChange="updateInput('end')"/></div>
+            </div>
         </div>
     </header>
     <div id="clients"><!-- All graphs of clients --></div>
     <script>
-curKey = ""
+curKey = "";
 clients = [];
 graphs = [];
 settings = {
@@ -56,10 +71,9 @@ function changeSettings(client){
     document.querySelector("#start").value = settings[client]['start'];
     document.querySelector("#end").value = settings[client]['end'];
 }
-    
 
 function displayGraph(client){
-    var div = document.querySelector("#clients #"+client);
+    var div = document.querySelector("#clients #"+client+" div");
     if (graphs[client] == undefined) clients[client] = createGraph(client, -1, -1);
     else if (document.querySelector("#listClient #"+client+" input").checked) {
         div.className = "";
@@ -97,6 +111,9 @@ function receiveInfo(clients, start_date, end_date, newClient){
                 var graph = LightweightCharts.createChart(div, { width: 400, height: 300 });
                 graphs[rc[client].name] = graph.addHistogramSeries({
                     base: 0,
+                    width: 600,
+                    height: 380,
+                    text: "Graph of "+rc[client].name,
                     localization: {locale: 'fr-FR'}
                 });
                 graphs[rc[client].name].setData(rc[client].data);

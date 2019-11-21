@@ -56,25 +56,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(mysqli_stmt_fetch($stmt)){
                         if($Password === $hashed_Password){
                             // Password is correct, so start a new session
-                            if($Username === "D4G2019"){
+                            if($Username == "D4G2019"){
                                 session_start();
                                 // Store data in session variables
                                 $_SESSION["loggedin"] = true;
                                 $_SESSION["ID"] = $id;
                                 $_SESSION["Username"] = $Username;
+                                // Redirect user to welcome page
                                 header("location: admin_view.php");
-                            } else {
-                                session_start();
-
-                            // Store data in session variables
-                                $_SESSION["loggedin"] = true;
-                                $_SESSION["ID"] = $id;
-                                $_SESSION["Username"] = $Username;
-                                $_SESSION["Foyer"] = $Foyer;     
-
-                            // Redirect user to welcome page
-                                header("location: welcome.php");
                             }
+                            session_start();
+                            
+                            // Store data in session variables
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["ID"] = $id;
+                            $_SESSION["Username"] = $Username;
+                            $_SESSION["Foyer"] = $Foyer;     
+                            
+                            // Redirect user to welcome page
+                            header("location: welcome.php");
                         } else{
                             // Display an error message if Password is not valid
                             $Password_err = "The Password you entered was not valid.";
