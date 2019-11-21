@@ -29,7 +29,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- Body -->
     <div class="content">
         <div class="page-header">
-            <h1>Bienvenue, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b> sur votre interface de gestion.</h1>
+            <h1>Bienvenue, <b><?php echo htmlspecialchars($_SESSION["Username"]); ?></b> sur votre interface de gestion.</h1>
         </div>
         <script>
             const chart = LightweightCharts.createChart(document.body, { 

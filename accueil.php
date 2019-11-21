@@ -14,11 +14,11 @@
       <form action="login.php" method="POST">
         <label>
           <span>Identifiant</span>
-          <input type="text" name="username" />
+          <input type="text" name="Username" />
         </label>
         <label>
           <span>Mot de Passe</span>
-          <input type="password" name="password"/>
+          <input type="Password" name="Password"/>
         </label>
         <button class="submit">Connexion</button>
       </form>
@@ -47,15 +47,15 @@
         <form action="register.php" method="POST">
           <label>
             <span>Identifiant</span>
-            <input type="text" name="username"/>
+            <input type="text" name="Username"/>
           </label>
           <label>
             <span>Mot de passe</span>
-            <input type="password" name="password"/>
+            <input type="text" name="Password"/>
           </label>
           <label>
             <span>Confirmer le mot de passe</span>
-            <input type="password" name="confirm_password"/>
+            <input type="tesxt" name="confirm_Password"/>
           </label>
           <button class="submit">Inscription</button>
         </form>

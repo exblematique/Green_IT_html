@@ -1,0 +1,19 @@
+.hidden{
+	display: none;
+    
+}
+
+#listClient a{
+    display: inline;
+}
+
+header div a{
+    width: 100%;
+    display: inline-block;
+    background-color: #DDDDDD;
+
+}
+
+header div a:nth-child(even){
+    background-color: #EEEEEE;
+}

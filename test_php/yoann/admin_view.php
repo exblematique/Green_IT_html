@@ -12,59 +12,32 @@
             include('META-INF/config.php');
             //Return the list of foyer available in database
             $result = $link->query('SELECT DISTINCT(Foyer) AS fd FROM Data;');
-            $curDate = date("Y-m-d");
-            $foyer = array();    //Contain settings for all graphs
             //Display buttons to select courbes to monitoring
             while($row = $result->fetch_array()){
-                array_push($foyer,$row['fd']);
                 echo '<div id="'.$row['fd'].'" onclick="displayGraph(\''.$row['fd'].'\')">
-                <input type="checkbox" name="clients" value="'.$row['fd'].'" />'.$row['fd'].'</div>';
+                <a id="'.$row['fd'].'" value="false">'.$row['fd'].'</a></div>';
             }
             $result->free();
             $link->close();
         ?></div>
-        <div id="Settings">
-            <ul><li class="deroulant"><a id="selFoyer">Select Foyer</a>
-                <ul class="sous">
-                    <?php foreach ($foyer as $key){
-                        echo '<li><a onclick="changeSettings(\''.$key.'\')">'.$key.'</a></li>';
-                    }?>
-                </ul>
-            </ul>
-            <div>Data from <input type="date" id="start" value="2019-01-01" onChange="updateInput('start')" /></div>
-            <div> to<input type="date" id="end" value="<?php echo $curDate;?>" onChange="updateInput('end')"/></div>
-        </div>
     </header>
-    <div id="clients"><!-- All graphs of clients --></div>
+    <div id="clients"></div>
+    <!-- All graphs of clients -->
     <script>
-curKey = ""
 clients = [];
 graphs = [];
-settings = {
-<?php $out="";
-    foreach ($foyer as $key) echo $key.':{start:"2019-01-01", end:"'.$curDate.'"},';
-?>
-};
-
-function updateInput(setting){
-    settings[curKey][setting] = document.querySelector("#"+setting).value;
-}
-
-function changeSettings(client){
-    curKey = client;
-    document.querySelector("#selFoyer").innerHTML = client;
-    document.querySelector("#start").value = settings[client]['start'];
-    document.querySelector("#end").value = settings[client]['end'];
-}
-    
 
 function displayGraph(client){
-    var div = document.querySelector("#clients #"+client);
+    var divClient = document.querySelector("#clients #"+client);
+    var divGraph = document.querySelector("#listClient #"+client);
+    divClient.className ? divClient.className = "" : divClient.className = "checked";
+    
     if (graphs[client] == undefined) clients[client] = createGraph(client, -1, -1);
-    else if (document.querySelector("#listClient #"+client+" input").checked) {
-        div.className = "";
-        receiveInfo([client], -1, -1);  
-    } else div.className = "hidden";
+    else if (divClient.value) {
+        divGraph.className = "";
+        receiveInfo([client], -1, -1);
+            
+    } else divGraph.className = "hidden";
 }
 
 //Function will create a new graph in realTime
