@@ -1,10 +1,17 @@
-﻿<!DOCTYPE html>
-<html lang="en" >
+<?php
+// Destruction de la session
+session_start();
+$_SESSION = array();
+session_destroy();
+?>
+
+<!DOCTYPE html>
+<html lang="fr-FR">
 <head>
+  <html lang="fr">
   <meta charset="UTF-8">
   <title>Login/Registration Form Transition</title>
-  <link rel="stylesheet" href="./style_accueil-minimized.css">
-
+  <link rel="stylesheet" href="./style_accueil.css">
 </head>
 <body>
   <div class="cont">

@@ -1,5 +1,4 @@
 <?php
-
 // Initialize the session
 session_start();
  
@@ -40,30 +39,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
     // Check input errors before updating the database
     if(empty($new_password_err) && empty($confirm_password_err)){
-
-        //REDIRECTION Vers une page -> veillez confirmer la demande de mail
-
-        // 1-Ajout demande dans la DDB + 2-envoie du mail pour confirmer
-
-        //1 ON SUPPOSE QUE L ON A LE MAIL DE L USER !!!
         // Prepare an update statement
-        $sql = "INSERT INTO Verification(Done, Code, UserID, Password, Email, Type)  VALUES (false,?,$_SESSION["ID"],$new_password,?,0)";
+        $sql = "UPDATE Account SET Password = ? WHERE ID = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "si", $param_code , $param_email);
+            mysqli_stmt_bind_param($stmt, "si", $param_password, $param_id);
             
             // Set parameters
-            $param_code = hash('sha1',floor(microtime(true)*100));
-            $param_email = $_SESSION["Username"]; // A TESTER SI L USERNAME EST UNE ADDRESSE MAIL OU NON !!!! Sinon demander une adresse mail
+            $param_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $param_id = $_SESSION["ID"];
             
             // Attempt to execute the prepared statement
-
             if(mysqli_stmt_execute($stmt)){
                 // Password updated successfully. Destroy the session, and redirect to login page
                 session_destroy();
-
-                //2- ENVOIE D'UN MAIL
+                
                 require 'PHPMailerAutoload.php';
                 $mail = new PHPMailer;
                 $mail->isSMTP();
@@ -73,36 +64,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $mail->SMTPSecure='tls';
                 $mail->Username='greenhightea@gmail.com';
                 $mail->Password='7WjTgoLS7WjTgoLS';
-                $mail->setFrom('greenhightea@gmail.com','ALED');
-                $mail->addAddress('tdepreux.ir2021@esaip.org');//$mail->addAddress($param_email); A CHANGER 
+                $mail->setFrom('greenhightea@gmail.com','');
+                $mail->addAddress($_SESSION['Email']);
                 $mail->isHTML(true);
                 $mail->Subject="Validation : Changement de mot de passe";
-                $mail->Body='<p>Vous avez fait la demande de changement de mot de passe <L
-                Pour completer l\'operation veuillez vous reconnecter via le lien suivant :</p><br>
-                <p><a href="URL">Lien de validation du changement de mot de passe</a><p> 
-                <p>Si vous n\'avez pas fait la demande de changement de mot de passe, nous vous conseillons de le changer dès que possible</p>
-                '; //URL A MODIFIER
+                $mail->Body='<p>Vous recevez ce mail car avez fait une demande de changement de mot de passe.</p>';
                 $mail->send();
-                //
-
-
-
-
-
 
                 header("location: login.php");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
+            // Close statement
+            mysqli_stmt_close($stmt);
+            // Close connection
+            mysqli_close($link);
+
         }
-        
-        // Close statement
-        mysqli_stmt_close($stmt);
     }
-    
-    // Close connection
-    mysqli_close($link);
 }
 ?>
  
@@ -118,11 +98,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </style>
 </head>
 <body>
-<div class="wrapper">
+    <div class="wrapper">
         <h2>Reset Password</h2>
-        <?php
-        echo  $_SESSION["username"];
-        ?>
         <p>Please fill out this form to reset your password.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
@@ -137,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <a class="btn btn-link" href="welcome.php" >Cancel</a>
+                <a class="btn btn-link" href="welcome.php">Cancel</a>
             </div>
         </form>
     </div>    

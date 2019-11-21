@@ -51,8 +51,9 @@ header div a:hover{
     background-color: white;
     position: absolute;
     width: 100%;
-    z-index: 1000;
+    z-index: 100;
 }
+
 header div > ul li:hover .sous{
     display: block;
 }
@@ -77,17 +78,20 @@ header div > ul li:hover .sous{
 .conteneur{
   margin: 50px 20px;
   height: 1500px;
+  
 }
 
 #listClient *{
     background-color: #DDDDDD;
     display: inline-block;
+
 }
 
 #listClient{
     max-width: 40%;
     border: none;
     display: inline-block;
+    
 }
 
 #listClient div{
@@ -107,22 +111,19 @@ header div > ul li:hover .sous{
     border: none;
 }
 
+
 #clients{
     margin:auto;
     text-align:center;
     height: auto;
     width: auto;
     border: none;
-    display: block;
 }
 
 #clients div{
     height: auto;
     width: auto;
     border: none;
-    display: inline-block;
-}
-
-.hidden{
-	display: none;
+    text-align:center;
+    display: inline-flex;
 }

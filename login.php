@@ -56,45 +56,34 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(mysqli_stmt_fetch($stmt)){
                         if($Password === $hashed_Password){
                             // Password is correct, so start a new session
-                            if($Username === "D4G2019"){
-                                session_start();
-                                // Store data in session variables
-                                $_SESSION["loggedin"] = true;
-                                $_SESSION["ID"] = $id;
-                                $_SESSION["Username"] = $Username;
-                                header("location: admin_view.php");
+                            session_start();
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["ID"] = $id;
+                            $_SESSION["Username"] = $Username;
+                            if($Username == "D4G2019"){
+                                header("location: admin_view.php"); // Redirect user to admin page
                             } else {
-                                session_start();
-
-                            // Store data in session variables
-                                $_SESSION["loggedin"] = true;
-                                $_SESSION["ID"] = $id;
-                                $_SESSION["Username"] = $Username;
                                 $_SESSION["Foyer"] = $Foyer;     
-
-                            // Redirect user to welcome page
-                                header("location: welcome.php");
-                            }
-                        } else{
-                            // Display an error message if Password is not valid
-                            $Password_err = "The Password you entered was not valid.";
+                            header("location: welcome.php"); // Redirect user to welcome page
                         }
                     }
                 } else{
-                    // Display an error message if Username doesn't exist
-                    $Username_err = "No account found with that Username.";
+                            // Display an error message if Password is not valid
+                    $Password_err = "The Password you entered was not valid.";
                 }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
             }
+        } else{
+                    // Display an error message if Username doesn't exist
+            $Username_err = "No account found with that Username.";
         }
-        
-        // Close statement
-        mysqli_stmt_close($stmt);
+    } else{
+        echo "Oops! Something went wrong. Please try again later.";
     }
-    
+}
+        // Close statement
+mysqli_stmt_close($stmt);
     // Close connection
-    mysqli_close($link);
+mysqli_close($link);
 }
 ?>
 
@@ -115,13 +104,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <p>Please fill in your credentials to login.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group <?php echo (!empty($Username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="Username" class="form-control" value="<?php echo $Username; ?>">
+                <label for="Username">Username</label>
+                <input id="Username" type="text" name="Username" class="form-control" value="<?php echo $Username; ?>">
                 <span class="help-block"><?php echo $Username_err; ?></span>
             </div>    
             <div class="form-group <?php echo (!empty($Password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="Password" name="Password" class="form-control">
+                <label for="Password">Password</label>
+                <input id="Password" type="Password" name="Password" class="form-control">
                 <span class="help-block"><?php echo $Password_err; ?></span>
             </div>
             <div class="form-group">

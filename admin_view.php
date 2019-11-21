@@ -36,15 +36,6 @@ if($_SESSION["Username"] != "D4G2019"){
         ?></div>
         <div id="settings">
             <div>
-            <ul><li class="deroulant"><a id="selFoyer">Select Foyer</a>
-                <ul class="sous">
-                    <?php foreach ($foyer as $key){
-                        echo '<li><a onclick="changeSettings(\''.$key.'\')">'.$key.'</a></li>';
-                    }?>
-                </ul>
-            </ul>
-            </div>
-            <div>
                 <div>Data from <input type="date" id="start" value="2019-01-01" onChange="updateInput('start')" /></div>
                 <div> to<input type="date" id="end" value="<?php echo $curDate;?>" onChange="updateInput('end')"/></div>
             </div>
@@ -52,8 +43,11 @@ if($_SESSION["Username"] != "D4G2019"){
     </header>
     <div id="clients"><!-- All graphs of clients --></div>
     <script>
+
 curKey = "";
-clients = [];
+nbClient = 0;
+curClient = []
+dlClients = [];
 graphs = [];
 settings = {
 <?php $out="";
@@ -72,13 +66,22 @@ function changeSettings(client){
     document.querySelector("#end").value = settings[client]['end'];
 }
 
+//Launch to display Graph
 function displayGraph(client){
-    var div = document.querySelector("#clients #"+client+" div");
-    if (graphs[client] == undefined) clients[client] = createGraph(client, -1, -1);
-    else if (document.querySelector("#listClient #"+client+" input").checked) {
-        div.className = "";
-        receiveInfo([client], -1, -1);  
-    } else div.className = "hidden";
+    //Create graph if the graph is not download yet.
+    if (graphs[client] == undefined) createGraph(client, -1, -1);
+    var div = document.querySelector("#clients #"+client);
+    if (document.querySelector("#listClient #"+client+" input").checked) {
+        if (div) div.style.display = "inline-flex";
+        clients[curClient] = 1;
+        nbClient++;
+        receiveInfo([client], -1, -1);
+        if (nbClient == 1) setTimeout("tempReel()", 500);
+    } else {
+        div.style.display = "none";
+        clients[curClient] = 0;
+        nbClient--;
+    }
 }
 
 //Function will create a new graph in realTime
@@ -88,7 +91,7 @@ function createGraph (name, start, end) {
         start_info: "",
         end_info: ""
     }
-    return receiveInfo([client], "2019-01-01", "2019-01-01", true);
+    receiveInfo([client], "2019-01-01", "2019-01-01", true);
 }
     
 //Function will enable to receive more information from database
@@ -108,22 +111,36 @@ function receiveInfo(clients, start_date, end_date, newClient){
             if (newClient) {
                 var div = document.createElement("div");
                 div.id = rc[client].name;
-                var graph = LightweightCharts.createChart(div, { width: 400, height: 300 });
-                graphs[rc[client].name] = graph.addHistogramSeries({
+                var chart = LightweightCharts.createChart(div, { width: 400, height: 300 });
+                graphs[rc[client].name] = chart.addHistogramSeries({
                     base: 0,
                     width: 600,
                     height: 380,
                     text: "Graph of "+rc[client].name,
+                    autoScale: true,
                     localization: {locale: 'fr-FR'}
                 });
                 graphs[rc[client].name].setData(rc[client].data);
+                curClient[rc[client].name] = 1;
+                chart.timeScale().fitContent();
+                dlClients.push(client);
                 document.querySelector("#clients").appendChild(div);
             }
-            else graphs[rc[client].name].updateData(rc[client]['data']);
+            else {
+                graphs[rc[client].name].updateData(rc[client]['data']);
+                curClient[rc[client].name] = 1;
+            }
         }
-        return client;
     });
 }
+
+function tempReel(){
+    if (nbClient != 0){
+        receiveInfo(curClient, -1, -1);
+        setTimeout("tempReel()", 3000);
+    }
+}
+
 </script>
 </body>
 </html>

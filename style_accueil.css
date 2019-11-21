@@ -80,7 +80,7 @@ button {
   top: 0;
   width: 900px;
   height: 100%;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/7b/Loire_Maine_Angers2_tango7174.jpg");
+  background-image: url(img/angers.jpg);
   background-size: cover;
   transition: -webkit-transform 1.2s ease-in-out;
   transition: transform 1.2s ease-in-out;

@@ -1,68 +1,55 @@
-body{
+html, body {
   text-align: center;
 }
 
-.tv-lightweight-charts{
+#content{
+  align-content: center;
   display: inline-flex;
 }
 
-.topnav {
-  overflow: hidden;
-  background-color: #3e65ff;
-  border: 1px solid black;
+.navbar {
+  width: 100%;
+  display: inline-flex;
+  background-color: #555;
 }
 
-a {
+.navbar a {
   float: left;
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
+  padding: 12px;
+  color: white;
   text-decoration: none;
   font-size: 17px;
+  width: 25%; /* Four links of equal widths */
 }
 
-a#accueil:hover {
-  transition: 1s;
-  background-color: #ddd;
+.navbar a:hover {
+  transition: 0.5s;
+  background-color: #000;
+}
+
+.navbar a.active {
+  background-color: #3e65ff;
+}
+
+.btn {
+  border: 2px solid black;
+  background-color: white;
   color: black;
-}
-
-a#accueil {
-  background-color: #2196F3;
-  color: white;
-}
-
-a#inscription {
-  background-color: #2196F3;
-  float: right;
-  color: white;
-}
-
-.topnav .login-container {
-  float: right;
-}
-
-.topnav input[type=text],[type=password] {
-  padding: 6px;
-  margin-top: 8px;
-  font-size: 17px;
-  border: none;
-  width:120px;
-}
-
-.topnav .login-container button {
-  float: right;
-  padding: 6px 10px;
-  margin-top: 8px;
-  margin-right: 16px;
-  background-color: #555;
-  color: white;
-  font-size: 17px;
-  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-.topnav .login-container button:hover {
-  background-color: green;
+/* Blue */
+.toggle {
+  border-color: #2196F3;
+  color: dodgerblue;
+  transition: 1s;
+}
+
+.toggle:hover {
+  transition: 1s;
+  background: #2196F3;
+  color: white;
 }

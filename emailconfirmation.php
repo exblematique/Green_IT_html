@@ -98,7 +98,7 @@ mysqli_stmt_close($stmt);
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr-FR">
 <head>
     <meta charset="UTF-8">
     <title>Email confirmation</title>
