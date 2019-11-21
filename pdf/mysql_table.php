@@ -51,13 +51,13 @@ function Row($data)
         $value = $data[$col['f']];
 	If($value <= $moyenne)
 		$Color = [
-				0 => 0,
-				1 => 128,
-				2=> 0,];
+				0 => 50,
+				1 => 205,
+				2=> 50,];
 	if($value >= $moyenne)
 		$Color = [
-				0 => 255,
-				1 => 0,
+				0 => 238,
+				1 => 34,
 				2 => 0,];
     if($fill)
         $this->SetFillColor($Color[0],$Color[1],$Color[2]);

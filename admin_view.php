@@ -2,22 +2,36 @@
 <html lang="fr-FR">
 <head>
   <title>Team 39 - Admin view</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
-    <div id="listClient"><?php/*
+    <div id="listClient"><?php
 include('META-INF/config.php');
-$sql="SELECT * FROM users";
-$result=mysqli_query($link,$sql);
-var_dump(mysqli_fetch_all($result,MYSQLI_ASSOC));
-mysqli_free_result($result);
-mysqli_close($link);*/?> </div>
+$result = $link->query('SELECT DISTINCT(Foyer) AS fd FROM Data;');
+while($row = $result->fetch_array()){
+    echo '<div id="'.$row['fd'].'" onclick="displayGraph(\''.$row['fd'].'\')">
+    <input type="checkbox" name="clients" value="'.$row['fd'].'" />'.$row['fd'].'</div>';
+}
+$result->free();
+$link->close();
+    ?></div>
     <div id="clients"></div>
     
     <script>
 clients = [];
 graphs = [];
+
+function displayGraph(client){
+    var div = document.querySelector("#clients #"+client);
+    if (graphs[client] == undefined) clients[client] = createGraph(client, -1, -1);
+    else if (document.querySelector("#listClient #"+client+" input").checked) {
+        div.className = "";
+        receiveInfo([client], -1, -1);
+            
+    } else div.className = "hidden";
+}
 
 //Function will create a new graph in realTime
 function createGraph (name, start, end) {
@@ -26,11 +40,8 @@ function createGraph (name, start, end) {
         start_info: "",
         end_info: ""
     }
-    receiveInfo([client], "2019-01-01", "2019-01-01", true);
+    return receiveInfo([client], "2019-01-01", "2019-01-01", true);
 }
-
-createGraph("A", 1, 3);
-createGraph("B", 1, 3);
     
 //Function will enable to receive more information from database
 function receiveInfo(clients, start_date, end_date, newClient){
@@ -59,6 +70,7 @@ function receiveInfo(clients, start_date, end_date, newClient){
             }
             else graphs[rc[client].name].updateData(rc[client]['data']);
         }
+        return client;
     });
 }
 </script>

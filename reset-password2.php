@@ -1,13 +1,13 @@
 <?php
 
-require 'META-INF/PHPMailerAutoload.php';
+require 'PHPMailerAutoload.php';
 $mail = new PHPMailer;
 $mail->isSMTP();
 $mail->Host='smtp.gmail.com';
 $mail->Port=587;
 $mail->SMTPAuth=true;
 $mail->SMTPSecure='tls';
-$mail->Username='greenhightea1@gmail.com';
+$mail->Username='greenhightea@gmail.com';
 $mail->Password='7WjTgoLS7WjTgoLS';
 $mail->setFrom('greenhightea1@gmail.com','ALED');
 $mail->addAddress('tdepreux.ir2021@esaip.org');
@@ -16,6 +16,7 @@ $mail->Subject="ALEDDDDD";
 $mail->Body='<h1> MAIL FONCTIONNE PAS ALED </h1>';
 if(!$mail->send()){
     echo "MESSAGE FONCTIONNE PAS SURPRISE !";
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
 }
 else{
     echo "OH MAIS SURPRISE";
