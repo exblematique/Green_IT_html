@@ -56,6 +56,10 @@ session_destroy();
             <input type="text" name="Username"/>
           </label>
           <label>
+            <span>Email</span>
+            <input type="text" name="Email"/>
+          </label>
+          <label>
             <span>Mot de passe</span>
             <input type="password" name="Password"/>
           </label>

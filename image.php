@@ -1,16 +1,18 @@
 <?php
 include("META-INF/config.php");
 $img = $_POST['img'];
-$img = base64_decode($img);
-$result = imagecreatefromstring($img);
-if ($im !== false) {
+$decoded = base64_decode(substr($img,22));
+$id =1 ;
+file_put_contents('/var/tmp/image'.$id.'.png', $decoded);
+//$result = imagecreatefromstring($img);
+/*if ($im !== false) {
     header('Content-Type: image/png');
     imagepng($img);
     imagedestroy($img);
 }
 else {
     echo 'An error occurred.';
-}
+}*/
 echo "coucou";
 /*
                 $img = str_replace('data:image/png;base64,', '', $img);
