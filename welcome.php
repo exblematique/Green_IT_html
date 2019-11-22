@@ -88,12 +88,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             //AreaSeriesChart
             var graph = createAreaSeriesChart([{
                 name: <?php echo '"'.$_SESSION["Foyer"].'"'; ?>,
-                start_info: "-1",
-                end_info: "-1"
+                start: "-1",
+                end: "-1"
             }], -1, -1, true);
             function createAreaSeriesChart(clients, start_date, end_date, newClient){
                 data = {clients: clients,
-                    date: start_date,
+                    start: start_date,
                     end: end_date}
                     $.ajax({
                         type: "POST",
@@ -139,7 +139,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             }], -1, -1, true);
             function createHistogramChart(clients, start_date, end_date, newClient){
                 data = {clients: clients,
-                    date: start_date,
+                    start: start_date,
                     end: end_date}
                     $.ajax({
                         type: "POST",

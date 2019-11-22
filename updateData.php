@@ -10,7 +10,9 @@ $len = count($foyer);
             "name": "<?php echo $foyer[$i]['name']; ?>",
             "data": [
         <?php
-        $result = $link->query('SELECT Value, Date FROM Data WHERE Foyer="'.$foyer[$i]['name'].'" AND Date BETWEEN "'.$_POST['start'].'" AND "'.$_POST['end'].'";');
+        if ($_POST['start'] == -1) $result = $link->query('SELECT Value, Date FROM Data WHERE Foyer="'.$foyer[$i]['name'].'";');
+        else $result = $link->query('SELECT Value, Date FROM Data WHERE Foyer="'.$foyer[$i]['name'].'" AND (Date BETWEEN "'.$_POST['start'].'" AND "'.$_POST['end'].'");');
+        
         $out = "";
         while($row = $result->fetch_array()){
             $out.='{"time": "'.$row['Date'].'", "value":'.$row['Value'].'},';
