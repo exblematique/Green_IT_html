@@ -41,12 +41,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="navbar">
         <a href="#" class="active"><i class="fa fa-fw fa-home"></i> Accueil</a> 
         <a href="pdf.php"><i class="fa fa-file-pdf-o"></i> Télécharger vos données</a>
-        <a href="pdf.php"><i class="fa fa-bar-chart"></i> Télécharger votre facture</a>
+        <a href="reset-password.php"><i class="fa fa-key"></i> Modifier le mot de passe</a>
         <a href="logout.php"><i class="fa fa-fw fa-user"></i> Déconnexion</a>
     </div>
 
     <!-- Body -->
-   <?php echo"<h2>Bonjour, ".$_SESSION["Username"].". Voilà votre mois de Janvier en détail.</h2>";?>
+    <?php echo"<h2>Bonjour, ".$_SESSION["Username"].". Voilà votre mois de Janvier en détail.</h2>";?>
     <div id="content">
         <div class="infoLogement">
             <?php
@@ -117,12 +117,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         chart.timeScale().fitContent();
                         img = chart.takeScreenshot().toDataURL("image/png")
                         function Image(){
-                        $.ajax({
-                        type: "POST",
-                        url: "image.php",
-                        data: {img: img},
-                        dataType: "text"
-                        });
+                            $.ajax({
+                                type: "POST",
+                                url: "image.php",
+                                data: {img: img},
+                                dataType: "text"
+                            });
                         };
                         Image();
                         return graph;
@@ -175,31 +175,23 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 document.querySelector("#charts").appendChild(div);
                             }
                             else graph.updateData(rc[client]['data']);
-                        
+
                         }
                         chart.timeScale().fitContent();
-                        var img2 = chart.takeScreenshot().toDataURL("image/png")
-                        function Image(){
-                        $.ajax({
-                        type: "POST",
-                        url: "image.php",
-                        data: {img2: img2},
-                        dataType: "text"
-                        });
-                        };
-                        Image();
-                        
+                                                
                         return graph;
                     });
                     
                 }
                 
-            
+
                 
             </script>
         </div>
     </div>
     <div><button class="btn toggle" onclick="toggleCharts()">Changement d'affichage</button></div>
-    
+    <div class="footer">
+        © Green High Tea, All rights reserved. | <a href="rgpd.php">Mentions Légales</a>
+    </div>
 </body>
 </html>

@@ -32,8 +32,8 @@ if($_SESSION["Username"] != "D4G2019"){
         ?></div>
         <div id="settings">
             <div>
-                <div>Data from <input type="date" id="start" value="2019-01-01" ontoggle="updateDate()" /></div>
-                <div> to<input type="date" id="end" value="<?php echo $curDate;?>" ontoggle="updateDate()" /></div>
+                <div>Data from <input type="date" id="start" value="2019-01-12" onclick="updateDate()" /></div>
+                <div> to<input type="date" id="end" value="<?php echo $curDate;?>" onclick="updateDate()" /></div>
             </div>
             <button type="button" onclick="document.location.href='admin_viewaccount.php'">Gérer les utilisateurs</button>
             <button type="button" onclick="document.location.href='logout.php'">Déconnexion</button>
@@ -41,7 +41,7 @@ if($_SESSION["Username"] != "D4G2019"){
     </header>
     <div id="clients"><!-- All graphs of clients --></div>
     <script>
-
+    
 graphs = [];
 curClient = [];
 
@@ -55,10 +55,10 @@ function displayGraph(client){
     document.querySelector("#clients #"+client).classList.toggle("hidden");
 }
 
-function updateGame(){
-    clients = [];
+function updateDate(){
+    clients = Array();
     for (c in curClient){
-        if (curClient[c]) client.append({name:c}); //graphs[c].updateData(graphs[c]['data']);
+        if (curClient[c]) clients.push({name:c}); //graphs[c].updateData(graphs[c]['data']);
     }
     receiveInfo(clients, false);
 }
@@ -118,7 +118,7 @@ function receiveInfo(clients, newClient){
                 chart.timeScale().fitContent();
                 document.querySelector("#clients").appendChild(div);
             }
-            else graphs[rc[client].name].updateData(rc[client]['data']);
+            else graphs[rc[client].name].update(rc[client]['data']);
         }
     });
 }

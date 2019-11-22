@@ -1,12 +1,17 @@
 html, body {
   align-content: center;
   text-align: center;
-  width: 100%;
 }
 
 #content{
   align-content: center;
   display: inline-flex;
+}
+
+.infoLogement{
+  top: 50px;
+  left: 15px;
+  position: fixed;
 }
 
 .navbar {
@@ -56,30 +61,25 @@ html, body {
   color: white;
 }
 
-/* Header Admin */
-
-.sidenav {
-  text-align: left;
-  width: 50px;
+.footer {
+  padding: 5px 5px;
   position: fixed;
-  top: 52px;
-  left: 8px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-decoration: none;
+  color: grey;
+  text-align: center;
+  background-color: black;
+}
+
+.footer a{
+  color: grey;
+  text-decoration: none;
+}
+
+.footer a:hover{
+  transition: 1s;
   color: white;
-  background: #555555;
-  padding: 8px 0;
-}
-
-.sidenav a{
-
-}
-.sidenav a:hover {
-  color: #064579;
-}
-
-#clients {
-  align-content: center;
-  display: inline-flex;
-  margin-top: 20px;
-  margin-left: 80px; /* Same as the width of the sidebar */
-  padding: 0px 10px;
+  text-decoration: none;
 }

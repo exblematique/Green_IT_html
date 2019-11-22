@@ -102,10 +102,10 @@ while($row = $result->fetch_array())
 {
 	$user = ''.$row['Nom'].' '.$row['Prenom'];
 }
-$result = $db->query('SELECT Num_voie,Voie FROM Logement WHERE Foyer="'.$_SESSION["Foyer"].'" ');
+$result = $db->query('SELECT Num_voie,Voie,Ville FROM Logement WHERE Foyer="'.$_SESSION["Foyer"].'" ');
 while($row = $result->fetch_array())
 {
-	$adress = ''.$row['Num_voie'].' '.$row['Voie'];
+	$adress = ''.$row['Num_voie'].' '.$row['Voie'].','.$row['Ville'];
 }
 $result = $db->query('SELECT AVG(Value) FROM Data WHERE Foyer="'.$_SESSION["Foyer"].'"');
 while($row = $result->fetch_array())
@@ -146,9 +146,9 @@ $db->close();
 
 $pdf->AliasNbPages();
 //$pdf->Image('tmp/image1.png /var/tmp/systemd-private-a3309c6c96c443f6afe0c6d7fd3c4c58-apache2',90,60,95);
-$pdf->Image('/var/tmp/image1.png',90,140,95);
+$pdf->Image('img/image1.png',90,140,105);
 
-$pdf->Image('pdf/romain.jpg',90,140,95);
+
 $pdf->ln(5);
 $pdf->legende(238,34,0,"Consommation forte");
 $pdf->legende(50,205,50,"Consommation faible");
@@ -158,5 +158,5 @@ $pdf->Cell(0,10,'Solde totale :'.round($somme*$kWh/1000,2) .' '.chr(128),0,1);
 
 
 
-$pdf->Output();
+$pdf->Output('D');
 ?>

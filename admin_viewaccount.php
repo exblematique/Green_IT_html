@@ -8,7 +8,6 @@ if($_SESSION["Username"] != "D4G2019"){
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(!empty($_POST["ID"])){
-        echo $_POST["ID"];
         $stmt = $mysqli->prepare("UPDATE Account SET `Actif` = 1 WHERE ID = ?");
         $stmt->bind_param('s', $ID);
         $ID = $_POST["ID"];
@@ -24,12 +23,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $mail->Username='greenhightea@gmail.com';
         $mail->Password='7WjTgoLS7WjTgoLS';
         $mail->setFrom('greenhightea@gmail.com','ALED');
-        $mail->addAddress($_POST['Email'])
+        $mail->addAddress(trim($_POST['Email']));
         $mail->isHTML(true);
         $mail->Subject="Validation : vérification du compte";
         $mail->Body="<p>Vous recevez ce mail car vôtre compte viens d'être validé par un administrateur. Vous pouvez desormais vous connecter et accéder au facture de votre loyé (par défaut vous n'en avez pas)</p>";
         $mail->send();
-
     };
 }
 
