@@ -6,6 +6,7 @@ header{
 *{
     margin: 0px;
     font-family: Avenir, sans-serif;
+    text-align: centre;
 }
 
 header div{
@@ -24,7 +25,6 @@ header div{
     max-width: 40%;
     border: none;
     display: inline-block;
-    
 }
 
 #listClient div{
@@ -37,7 +37,7 @@ header div{
 }
 
 #listClient div:nth-child(even).checked{
-    background-color: #cc0000;
+    background-color: #87CEEB;
 }
 
 
@@ -60,7 +60,7 @@ header div{
 
 .checked {
     color: #ffffff;
-    background-color: #ff0000;
+    background-color: #00BFFF;
 }
 .hidden {
     display: none;

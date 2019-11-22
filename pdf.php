@@ -145,7 +145,7 @@ $db->close();
 // Fin Tableau 
 
 $pdf->AliasNbPages();
-$pdf->Image('pdf/romain.jpg',90,60,95);
+$pdf->Image('img/image.png',90,60,95);
 $pdf->Image('pdf/romain.jpg',90,140,95);
 $pdf->ln(5);
 $pdf->legende(238,34,0,"Consommation forte");

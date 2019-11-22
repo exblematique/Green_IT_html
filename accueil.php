@@ -79,6 +79,9 @@ session_destroy();
       document.querySelector('.cont').classList.toggle('s--signup');
     });
   </script>
-
+  <div class="footer">
+  © Green High Tea, All rights reserved. | <a href="legal.php">Mentions Légales</a>
+</div>
 </body>
+
 </html>

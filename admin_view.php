@@ -35,13 +35,15 @@ if($_SESSION["Username"] != "D4G2019"){
                 <div>Data from <input type="date" id="start" value="2019-01-01" onChange="updateInput('start')" /></div>
                 <div> to<input type="date" id="end" value="<?php echo $curDate;?>" onChange="updateInput('end')"/></div>
             </div>
+            <button type="button" onclick="document.location.href='admin_viewaccount.php'">Gérer les utilisateurs</button>
+            <button type="button" onclick="document.location.href='logout.php'">Déconnexion</button>
         </div>
     </header>
     <div id="clients"><!-- All graphs of clients --></div>
     <script>
 
-curClient = []
-dlClients = [];
+//curClient = []
+//dlClients = [];
 graphs = [];
 
 //Launch to display Graph, used the class hidden to display or not div-buttons
@@ -49,9 +51,7 @@ function displayGraph(client){
     console.log(client);
     //Create graph if the graph is not download yet.
     if (!graphs[client]) createGraph(client, "2019-01-01", "2019-01-01");
-    //while (document.querySelector("#clients #"+client) == null); //Time to finish to download BD of client
-        //if (document.querySelector("#clients #"+client) != null) break;
-    //}
+
     document.querySelector("#listClient #"+client).classList.toggle("checked");
     document.querySelector("#clients #"+client).classList.toggle("hidden");
 }
@@ -98,20 +98,38 @@ function receiveInfo(clients, start_date, end_date, newClient){
         for (client in rc) {
             if (newClient) {
                 var div = document.createElement("div");
-                div.id = rc[client].name;
-                var chart = LightweightCharts.createChart(div, { width: 400, height: 300 });
-                graphs[rc[client].name] = chart.addHistogramSeries({
+                div.id = "Graph of "+ rc[client].name;
+                var chart = LightweightCharts.createChart(div, {
+                    width: 400,
+                    height: 300,
+                    
+                });
+                graphs[rc[client].name] = chart.addAreaSeries({
                     base: 0,
                     width: 600,
                     height: 380,
-                    text: "Graph of "+rc[client].name,
                     autoScale: true,
-                    localization: {locale: 'fr-FR'}
+                    localization: {locale: 'fr-FR'},
+                    topColor: 'rgba(38, 198, 218, 0.56)',
+                    bottomColor: 'rgba(38, 198, 218, 0.04)',
+                    lineColor: 'rgba(38, 198, 218, 1)',
+                    lineWidth: 2,
+                    crossHairMarkerVisible: false,
                 });
                 graphs[rc[client].name].setData(rc[client].data);
+                /************* Legends *********************/
+                var legend = document.createElement('div');
+                legend.classList.add('legend');
+                div.appendChild(legend);
+
+                var firstRow = document.createElement('div');
+                firstRow.innerText = rc[client].name;
+                firstRow.style.color = 'black';
+                legend.appendChild(firstRow);
+                /*********************************************/
                 //curClient[rc[client].name] = 1;//Tmp réel
                 chart.timeScale().fitContent();
-                dlClients.push(client);
+                //dlClients.push(client);
                 document.querySelector("#clients").appendChild(div);
             }
             else {

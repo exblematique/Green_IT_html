@@ -224,16 +224,6 @@ input {
   background: #d4af7a;
   text-transform: uppercase;
 }
-
-.fb-btn {
-  border: 2px solid #d3dae9;
-  color: #8fa1c7;
-}
-.fb-btn span {
-  font-weight: bold;
-  color: #455a81;
-}
-
 .sign-in {
   transition-timing-function: ease-out;
 }
@@ -253,17 +243,25 @@ input {
           transform: translate3d(0, 0, 0);
 }
 
-.icon-link {
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
-  width: 32px;
-}
-.icon-link img {
+.footer {
+  padding: 5px 5px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
   width: 100%;
-  vertical-align: top;
+  text-decoration: none;
+  color: grey;
+  text-align: center;
+  background-color: black;
 }
-.icon-link--twitter {
-  left: auto;
-  right: 5px;
+
+a{
+  color: grey;
+  text-decoration: none;
+}
+
+a:hover{
+  transition: 1s;
+  color: white;
+  text-decoration: none;
 }
