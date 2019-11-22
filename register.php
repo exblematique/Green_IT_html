@@ -23,16 +23,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(strlen(trim($_POST["Password"])) < 6){
         session_destroy();
         header("location: accueil.php");
+        exit;
     }else{
         $Password = trim($_POST["Password"]);
     }
     if( trim($_POST["cPassword"]) != trim($_POST["Password"]) ){
         session_destroy();
         header("location: accueil.php");
+        exit;
     }
     if(!filter_var(trim($_POST["Email"]), FILTER_VALIDATE_EMAIL)){
         session_destroy();
         header("location: accueil.php");
+        exit;
     }else{
         $Email = trim($_POST["Email"]);
     }
@@ -50,11 +53,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_store_result($stmt);
             if(mysqli_stmt_num_rows($stmt) !=0 ){session_destroy();
                 header("location: accueil.php");
+                exit;
             }else {$Username = trim($_POST["Username"]);}
         }
-    }
-    if(strlen($error_message) > 0){
-        //STOP
     }
     else{
         //LETS GO
@@ -87,8 +88,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $mail->send();
 
                 header("location: accueil.php");
+                exit;
             } else{session_destroy();
                 header("location: accueil.php");
+                exit;
             }
         }
     }
