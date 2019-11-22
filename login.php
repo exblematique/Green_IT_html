@@ -35,11 +35,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($Username_err) && empty($Password_err)){
         // Prepare a select statement
-        $sql = "SELECT ID, Username, Foyer, Password FROM Account WHERE Username = ?";
+        $sql = "SELECT ID, Username, Foyer, Password, Email , Actif , SHA1(?) FROM Account WHERE Username = ?";
         
-        if($stmt = mysqli_prepare($link, $sql)){
+    if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_Username);
+            mysqli_stmt_bind_param($stmt, "ss", $Password, $param_Username);
             
             // Set parameters
             $param_Username = $Username;
@@ -52,38 +52,45 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if Username exists, if yes then verify Password
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id , $Username , $Foyer , $hashed_Password);
+                    mysqli_stmt_bind_result($stmt, $id , $Username , $Foyer , $stored_Password, $email, $actif, $hashed_Password);
                     if(mysqli_stmt_fetch($stmt)){
-                        if($Password === $hashed_Password){
-                            // Password is correct, so start a new session
-                            session_start();
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["ID"] = $id;
-                            $_SESSION["Username"] = $Username;
-                            if($Username == "D4G2019"){
-                                header("location: admin_view.php"); // Redirect user to admin page
-                            } else {
-                                $_SESSION["Foyer"] = $Foyer;     
-                            header("location: welcome.php"); // Redirect user to welcome page
-                        }
-                    }
-                } else{
+                        if($actif === 1){
+                            if( $stored_Password === $hashed_Password){
+                                // Password is correct, so start a new session
+                                session_start();
+                                $_SESSION["loggedin"] = true;
+                                $_SESSION["Email"] = $email;
+                                $_SESSION["ID"] = $id;
+                                $_SESSION["Username"] = $Username;
+                                if($Username == "D4G2019"){
+                                    header("location: admin_view.php"); // Redirect user to admin page
+                                }else {
+                                    $_SESSION["Foyer"] = $Foyer;    
+                                header("location: welcome.php"); // Redirect user to welcome page
+                            }
+                        }else{
                             // Display an error message if Password is not valid
-                    $Password_err = "The Password you entered was not valid.";
+                            $Password_err = "The Password you entered was not valid.";
+                        }
+                        
+                        }else{
+                            echo "Oops ! Your account isnt activated yet. Try again later";
+                    }
+                }
                 }
             }
-        } else{
-                    // Display an error message if Username doesn't exist
+        }
+        else{
+             // Display an error message if Username doesn't exist
             $Username_err = "No account found with that Username.";
         }
-    } else{
+    // Close statement
+mysqli_stmt_close($stmt);
+// Close connection
+mysqli_close($link);
+    }else{
         echo "Oops! Something went wrong. Please try again later.";
     }
-}
-        // Close statement
-mysqli_stmt_close($stmt);
-    // Close connection
-mysqli_close($link);
 }
 ?>
 

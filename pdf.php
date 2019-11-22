@@ -1,9 +1,5 @@
 <?php
-$img = $_POST['img'];
-                $img = str_replace('data:image/png;base64,', '', $img);
-                $img = str_replace(' ', '+', $img);
-                $data = base64_decode($img);
-                $file = uniqid() . '.png';
+
                  
 require('pdf/fpdf.php');
 session_start();

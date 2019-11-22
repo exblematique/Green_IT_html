@@ -15,72 +15,6 @@ header div{
     top: 0px;
 }
 
-header div ul{
-    list-style-type: none;
-}
-
-header div ul li{
-    float: left;
-    width: 25%;
-    text-align: center;
-    position: relative;
-}
-
-header div ul::after{
-    content: "";
-    display: table;
-    clear: both;
-}
-
-header div a{
-    display: block;
-    text-decoration: none;
-    color: black;
-    border-bottom: 2px solid transparent;
-    padding: 10px 0px;
-}
-
-header div a:hover{
-    color: orange;
-    border-bottom: 2px solid gold;
-}
-
-.sous{
-    display: none;
-    box-shadow: 0px 1px 2px #CCC;
-    background-color: white;
-    position: absolute;
-    width: 100%;
-    z-index: 100;
-}
-
-header div > ul li:hover .sous{
-    display: block;
-}
-.sous li{
-    float: none;
-    width: 100%;
-    text-align: left;
-}
-.sous a{
-    padding: 10px;
-    border-bottom: none;
-}
-.sous a:hover{
-    border-bottom: none;
-    background-color: RGBa(200,200,200,0.1);
-}
-.deroulant > a::after{
-    content:" ▼";
-    font-size: 12px;
-}
-
-.conteneur{
-  margin: 50px 20px;
-  height: 1500px;
-  
-}
-
 #listClient *{
     background-color: #DDDDDD;
     display: inline-block;
@@ -126,4 +60,12 @@ header div > ul li:hover .sous{
     border: none;
     text-align:center;
     display: inline-flex;
+}
+
+.checked {
+    color: #ff0000;
+    background-color: #ff0000;
+}
+.hidden {
+    display: none;
 }

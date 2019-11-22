@@ -24,13 +24,9 @@ if($_SESSION["Username"] != "D4G2019"){
             //Return the list of foyer available in database
             $result = $link->query('SELECT DISTINCT(Foyer) AS fd FROM Data;');
             $curDate = date("Y-m-d");
-            $foyer = array();    //Contain settings for all graphs
             //Display buttons to select courbes to monitoring
-            while($row = $result->fetch_array()){
-                array_push($foyer,$row['fd']);
-                echo '<div id="'.$row['fd'].'" onclick="displayGraph(\''.$row['fd'].'\')">
-                <input type="checkbox" name="clients" value="'.$row['fd'].'" />'.$row['fd'].'</div>';
-            }
+            while($row = $result->fetch_array())
+                echo '<div id="'.$row['fd'].'" onclick="displayGraph(\''.$row['fd'].'\')">'.$row['fd'].'</div>';
             $result->free();
             $link->close();
         ?></div>
@@ -44,56 +40,49 @@ if($_SESSION["Username"] != "D4G2019"){
     <div id="clients"><!-- All graphs of clients --></div>
     <script>
 
-curKey = "";
-nbClient = 0;
 curClient = []
 dlClients = [];
 graphs = [];
-settings = {
-<?php $out="";
-    foreach ($foyer as $key) echo $key.':{start:"2019-01-01", end:"'.$curDate.'"},';
-?>
-};
 
-function updateInput(setting){
-    settings[curKey][setting] = document.querySelector("#"+setting).value;
-}
-
-function changeSettings(client){
-    curKey = client;
-    document.querySelector("#selFoyer").innerHTML = client;
-    document.querySelector("#start").value = settings[client]['start'];
-    document.querySelector("#end").value = settings[client]['end'];
-}
-
-//Launch to display Graph
+//Launch to display Graph, used the class hidden to display or not div-buttons
 function displayGraph(client){
+    console.log(client);
     //Create graph if the graph is not download yet.
-    if (graphs[client] == undefined) createGraph(client, -1, -1);
-    var div = document.querySelector("#clients #"+client);
-    if (document.querySelector("#listClient #"+client+" input").checked) {
-        if (div) div.style.display = "inline-flex";
+    if (!graphs[client]) createGraph(client, "2019-01-01", "2019-01-01");
+    //while (document.querySelector("#clients #"+client) == null); //Time to finish to download BD of client
+        //if (document.querySelector("#clients #"+client) != null) break;
+    //}
+    document.querySelector("#listClient #"+client).classList.toggle("checked");
+    document.querySelector("#clients #"+client).classList.toggle("hidden");
+}
+        /******* Serveur en temps-réel (Dans IF **************
         clients[curClient] = 1;
         nbClient++;
         receiveInfo([client], -1, -1);
         if (nbClient == 1) setTimeout("tempReel()", 500);
-    } else {
-        div.style.display = "none";
-        clients[curClient] = 0;
-        nbClient--;
-    }
-}
+        ****************** (Dans ELSE ************************/   
+        //clients[curClient] = 0;//Serveur en temps-réel
+        //nbClient--;
+    
 
-//Function will create a new graph in realTime
+/**********************
+function tempReel(){
+    if (nbClient != 0){
+        receiveInfo(curClient, -1, -1);
+        setTimeout("tempReel()", 3000);
+    }
+}************************/
+
+//Function will create a new graph
 function createGraph (name, start, end) {
     client = {
         name: name,
-        start_info: "",
-        end_info: ""
+        start_info: start,
+        end_info: end
     }
     receiveInfo([client], "2019-01-01", "2019-01-01", true);
 }
-    
+
 //Function will enable to receive more information from database
 function receiveInfo(clients, start_date, end_date, newClient){
     data = {clients: clients,
@@ -107,7 +96,6 @@ function receiveInfo(clients, start_date, end_date, newClient){
     }).done(function(result){
         var rc = result.clients;
         for (client in rc) {
-            console.log("Name: "+ rc[client].name+"\nData: "+rc[client].data+"\nGraph: "+graphs[rc[client].name]+"\n");
             if (newClient) {
                 var div = document.createElement("div");
                 div.id = rc[client].name;
@@ -121,26 +109,18 @@ function receiveInfo(clients, start_date, end_date, newClient){
                     localization: {locale: 'fr-FR'}
                 });
                 graphs[rc[client].name].setData(rc[client].data);
-                curClient[rc[client].name] = 1;
+                //curClient[rc[client].name] = 1;//Tmp réel
                 chart.timeScale().fitContent();
                 dlClients.push(client);
                 document.querySelector("#clients").appendChild(div);
             }
             else {
                 graphs[rc[client].name].updateData(rc[client]['data']);
-                curClient[rc[client].name] = 1;
+                //curClient[rc[client].name] = 1;//Tmp réel
             }
         }
     });
 }
-
-function tempReel(){
-    if (nbClient != 0){
-        receiveInfo(curClient, -1, -1);
-        setTimeout("tempReel()", 3000);
-    }
-}
-
 </script>
 </body>
 </html>

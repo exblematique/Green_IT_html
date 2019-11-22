@@ -1,5 +1,7 @@
 html, body {
+  align-content: center;
   text-align: center;
+  width: 100%;
 }
 
 #content{
@@ -52,4 +54,32 @@ html, body {
   transition: 1s;
   background: #2196F3;
   color: white;
+}
+
+/* Header Admin */
+
+.sidenav {
+  text-align: left;
+  width: 50px;
+  position: fixed;
+  top: 52px;
+  left: 8px;
+  color: white;
+  background: #555555;
+  padding: 8px 0;
+}
+
+.sidenav a{
+
+}
+.sidenav a:hover {
+  color: #064579;
+}
+
+#clients {
+  align-content: center;
+  display: inline-flex;
+  margin-top: 20px;
+  margin-left: 80px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
 }

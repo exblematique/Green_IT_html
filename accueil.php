@@ -6,9 +6,8 @@ session_destroy();
 ?>
 
 <!DOCTYPE html>
-<html lang="fr-FR">
+<html lang="en" >
 <head>
-  <html lang="fr">
   <meta charset="UTF-8">
   <title>Login/Registration Form Transition</title>
   <link rel="stylesheet" href="./style_accueil.css">
@@ -58,11 +57,11 @@ session_destroy();
           </label>
           <label>
             <span>Mot de passe</span>
-            <input type="text" name="Password"/>
+            <input type="password" name="Password"/>
           </label>
           <label>
             <span>Confirmer le mot de passe</span>
-            <input type="tesxt" name="confirm_Password"/>
+            <input type="password" name="confirm_Password"/>
           </label>
           <button class="submit">Inscription</button>
         </form>
