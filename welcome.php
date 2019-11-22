@@ -115,20 +115,20 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                         }
                         chart.timeScale().fitContent();
-						img = chart.takeScreenshot().toDataURL("image/png")
-						function Image(){
-						$.ajax({
+                        img = chart.takeScreenshot().toDataURL("image/png")
+                        function Image(){
+                        $.ajax({
                         type: "POST",
                         url: "image.php",
                         data: {img: img},
-						dataType: "text"
+                        dataType: "text"
                         });
-						};
-						Image();
+                        };
+                        Image();
                         return graph;
-						
+                        
                     });
-					
+                    
                 }
 
             //HistogramChart
@@ -175,27 +175,27 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 document.querySelector("#charts").appendChild(div);
                             }
                             else graph.updateData(rc[client]['data']);
-						
+                        
                         }
                         chart.timeScale().fitContent();
-						var img2 = chart.takeScreenshot().toDataURL("image/png")
-						function Image(){
-						$.ajax({
+                        var img2 = chart.takeScreenshot().toDataURL("image/png")
+                        function Image(){
+                        $.ajax({
                         type: "POST",
                         url: "image.php",
                         data: {img2: img2},
-						dataType: "text"
+                        dataType: "text"
                         });
-						};
-						Image();
-						
+                        };
+                        Image();
+                        
                         return graph;
                     });
-					
-				}
-				
-			
-				
+                    
+                }
+                
+            
+                
             </script>
         </div>
     </div>

@@ -145,7 +145,9 @@ $db->close();
 // Fin Tableau 
 
 $pdf->AliasNbPages();
-$pdf->Image('img/image.png',90,60,95);
+//$pdf->Image('tmp/image1.png /var/tmp/systemd-private-a3309c6c96c443f6afe0c6d7fd3c4c58-apache2',90,60,95);
+$pdf->Image('/var/tmp/image1.png',90,140,95);
+
 $pdf->Image('pdf/romain.jpg',90,140,95);
 $pdf->ln(5);
 $pdf->legende(238,34,0,"Consommation forte");

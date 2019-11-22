@@ -9,7 +9,7 @@ session_destroy();
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Login/Registration Form Transition</title>
+  <title>Green High Tea</title>
   <link rel="stylesheet" href="./style_accueil.css">
 </head>
 <body>
@@ -80,7 +80,7 @@ session_destroy();
     });
   </script>
   <div class="footer">
-  © Green High Tea, All rights reserved. | <a href="legal.php">Mentions Légales</a>
+  © Green High Tea, All rights reserved. | <a href="rgpd.php">Mentions Légales</a>
 </div>
 </body>
 

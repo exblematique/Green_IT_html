@@ -32,8 +32,8 @@ if($_SESSION["Username"] != "D4G2019"){
         ?></div>
         <div id="settings">
             <div>
-                <div>Data from <input type="date" id="start" value="2019-01-01" onChange="updateInput('start')" /></div>
-                <div> to<input type="date" id="end" value="<?php echo $curDate;?>" onChange="updateInput('end')"/></div>
+                <div>Data from <input type="date" id="start" value="2019-01-01" ontoggle="updateDate()" /></div>
+                <div> to<input type="date" id="end" value="<?php echo $curDate;?>" ontoggle="updateDate()" /></div>
             </div>
             <button type="button" onclick="document.location.href='admin_viewaccount.php'">Gérer les utilisateurs</button>
             <button type="button" onclick="document.location.href='logout.php'">Déconnexion</button>
@@ -42,52 +42,40 @@ if($_SESSION["Username"] != "D4G2019"){
     <div id="clients"><!-- All graphs of clients --></div>
     <script>
 
-//curClient = []
-//dlClients = [];
 graphs = [];
+curClient = [];
 
 //Launch to display Graph, used the class hidden to display or not div-buttons
 function displayGraph(client){
     console.log(client);
     //Create graph if the graph is not download yet.
-    if (!graphs[client]) createGraph(client, "2019-01-01", "2019-01-01");
-
+    if (!graphs[client]) {curClient[name]=0;createGraph(client);}
+    curClient[name]=1-curClient[name];
     document.querySelector("#listClient #"+client).classList.toggle("checked");
     document.querySelector("#clients #"+client).classList.toggle("hidden");
 }
-        /******* Serveur en temps-réel (Dans IF **************
-        clients[curClient] = 1;
-        nbClient++;
-        receiveInfo([client], -1, -1);
-        if (nbClient == 1) setTimeout("tempReel()", 500);
-        ****************** (Dans ELSE ************************/   
-        //clients[curClient] = 0;//Serveur en temps-réel
-        //nbClient--;
-    
 
-/**********************
-function tempReel(){
-    if (nbClient != 0){
-        receiveInfo(curClient, -1, -1);
-        setTimeout("tempReel()", 3000);
+function updateGame(){
+    clients = [];
+    for (c in curClient){
+        if (curClient[c]) client.append({name:c}); //graphs[c].updateData(graphs[c]['data']);
     }
-}************************/
+    receiveInfo(clients, false);
+}
+
 
 //Function will create a new graph
-function createGraph (name, start, end) {
-    client = {
-        name: name,
-        start_info: start,
-        end_info: end
-    }
-    receiveInfo([client], "2019-01-01", "2019-01-01", true);
+function createGraph (name) {
+    client = {name: name}
+    curClient[name]=1;
+    receiveInfo([client], true);
 }
 
 //Function will enable to receive more information from database
-function receiveInfo(clients, start_date, end_date, newClient){
+function receiveInfo(clients, newClient){
     data = {clients: clients,
-            date: start_date,
-            end: end_date}
+            start: document.querySelector("#start").value,
+            end: document.querySelector("#end").value}
     $.ajax({
         type: "POST",
         url: "updateData.php",
@@ -98,7 +86,7 @@ function receiveInfo(clients, start_date, end_date, newClient){
         for (client in rc) {
             if (newClient) {
                 var div = document.createElement("div");
-                div.id = "Graph of "+ rc[client].name;
+                div.id = rc[client].name;
                 var chart = LightweightCharts.createChart(div, {
                     width: 400,
                     height: 300,
@@ -127,15 +115,10 @@ function receiveInfo(clients, start_date, end_date, newClient){
                 firstRow.style.color = 'black';
                 legend.appendChild(firstRow);
                 /*********************************************/
-                //curClient[rc[client].name] = 1;//Tmp réel
                 chart.timeScale().fitContent();
-                //dlClients.push(client);
                 document.querySelector("#clients").appendChild(div);
             }
-            else {
-                graphs[rc[client].name].updateData(rc[client]['data']);
-                //curClient[rc[client].name] = 1;//Tmp réel
-            }
+            else graphs[rc[client].name].updateData(rc[client]['data']);
         }
     });
 }
