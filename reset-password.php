@@ -71,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $mail->Body='<p>Vous recevez ce mail car avez fait une demande de changement de mot de passe.</p>';
                 $mail->send();
 
-                header("location: login.php");
+                header("location: accueil.php");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
