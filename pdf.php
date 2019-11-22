@@ -34,7 +34,7 @@ function Header()
     $this->Cell($w,10,$titre,1,0,'C',true);
 
     // Logo
-    $this->Image('logo.png',10,6,35);
+    $this->Image('img/logo.png',10,6,35);
     
 }
 // Info user 
